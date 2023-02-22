@@ -25,7 +25,6 @@ class Notes {
   date = new Date();
   id = Date.now() + '';
   constructor(title, header, body) {
-    //// TEST PURPOSES
     this.title = title;
     this.header = header;
     this.body = body;
@@ -51,6 +50,7 @@ class App {
     this._noteResize();
     newBtn.addEventListener('click', this._newNote.bind(this));
     noteContainer.addEventListener('input', this._noteResize);
+    noteContainer.addEventListener('keypress', this._headerEnterKey);
     noteHeader.addEventListener('input', this._noteUpdateTitle);
     notesTitles.addEventListener('click', this._clickNote.bind(this));
     noteHeader.addEventListener('input', this._updateNoteData.bind(this));
@@ -99,14 +99,15 @@ class App {
     noteBody.value = note.body;
     noteHeader.value = note.header;
     this._noteResize();
+    noteBody.focus();
   }
   _updateNoteData() {
     const noteTarget = document.querySelector('.note--active').dataset.id;
     const note = this.#notes.find(note => String(note.id) === noteTarget);
-    console.log(note);
+
     note.body = noteBody.value;
     note.header = note.title = noteHeader.value;
-    console.log(note);
+    console.log(note.header, note.body);
   }
   _noteActiveReset() {
     document
@@ -138,7 +139,16 @@ class App {
     noteHeader.classList.remove('note--hidden');
     noteBody.classList.remove('note--hidden');
   }
+  _headerEnterKey(e) {
+    if (e.target.classList.contains('note-header')) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        noteBody.focus();
+      }
+    }
+  }
 }
+
 const app = new App();
 
 btnContainers.forEach(btn =>
