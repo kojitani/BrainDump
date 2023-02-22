@@ -1,0 +1,11 @@
+{
+  "name": "lol",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "test",
+  "permissions": ["storage"],
+
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
