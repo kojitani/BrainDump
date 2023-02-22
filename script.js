@@ -21,6 +21,58 @@ sortBtn.addEventListener('click', e => {
   console.log(e.target.closest('#sort-btn'));
 });
 
+class Notes {
+  date = new Date();
+  id = (Date.now() + '').slice(-10);
+  #notes = [];
+  constructor(title, header, body) {
+    this.title = title;
+    this.header = header;
+    this.body = body;
+  }
+}
+const note = new Notes('title', 'test', 'Im gonna kms tonight');
+
+console.log(note);
+const noteContainer = document.querySelector('.notes-container');
+const notesTitles = document.querySelector('.notes-titles');
+const titleList = document.querySelectorAll('.note-title');
+
+class App {
+  constructor() {
+    this._noteResize();
+    newBtn.addEventListener('click', this._newNote.bind(this));
+    noteContainer.addEventListener('input', this._noteResize);
+    noteHeader.addEventListener('input', this._noteTitle);
+  }
+  _newNote() {
+    noteBody.value = '';
+    noteBody.blur();
+    noteHeader.value = 'Untitled';
+    noteHeader.select();
+    this._newTitle();
+  }
+  _newTitle() {
+    document
+      .querySelectorAll('.note-title')
+      .forEach(title => title.classList.remove('note--active'));
+    notesTitles.insertAdjacentHTML(
+      'afterbegin',
+      `<li class="note-title note--active">Untitled</li>`
+    );
+  }
+  _noteTitle() {
+    document.querySelector('.note--active').textContent = noteHeader.value;
+  }
+  _noteResize() {
+    noteHeader.style.height = 'auto';
+    noteHeader.style.height = noteHeader.scrollHeight + 'px';
+    noteBody.style.height = 'auto';
+    noteBody.style.height = noteBody.scrollHeight + 'px';
+  }
+}
+const app = new App();
+
 btnContainers.forEach(btn =>
   btn.addEventListener('mouseenter', e => {
     console.log(e.target);
@@ -42,42 +94,3 @@ btnContainers.forEach(btn =>
       sortBtnDescription.classList.add('hidden');
   })
 );
-
-class Notes {
-  date = new Date();
-  id = (Date.now() + '').slice(-10);
-
-  constructor(title, header, body) {
-    this.title = title;
-    this.header = header;
-    this.body = body;
-  }
-}
-const note = new Notes('title', 'test', 'Im gonna kms tonight');
-
-console.log(note);
-const noteContainer = document.querySelector('.notes-container');
-class App {
-  constructor() {
-    newBtn.addEventListener('click', this._newNote);
-    noteContainer.addEventListener('input', this._noteResize);
-  }
-
-  _newNote(e) {
-    if (e.target.closest('#new-btn')) {
-      noteHeader.textContent = 'Untitled';
-      noteBody.textContent = '';
-      noteHeader.select();
-    }
-  }
-  _noteResize(e) {
-    if (e.target.classList.contains('note-header')) {
-      noteHeader.style.height = 'auto';
-      noteHeader.style.height = noteHeader.scrollHeight + 'px';
-    } else {
-      noteBody.style.height = 'auto';
-      noteBody.style.height = noteBody.scrollHeight + 'px';
-    }
-  }
-}
-const app = new App();

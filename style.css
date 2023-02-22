@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
 *,
 *::before,
 *::after {
@@ -103,13 +105,29 @@ body {
   height: calc(100% - 64px);
   overflow-y: scroll;
 }
+.notes-titles {
+  margin: 0;
+  padding: 0.5rem;
+}
 .note-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 25px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  line-height: 1.7rem;
   color: white;
   list-style: none;
+  border-radius: 5px;
+  padding-left: 0.3rem;
+  white-space: nowrap;
+  overflow-x: hidden;
+  cursor: pointer;
+  margin-bottom: 0.1rem;
 }
-
+.note--active {
+  background-color: rgba(122, 119, 115, 0.397);
+}
+.note-title:hover {
+  background-color: rgba(122, 119, 115, 0.397);
+}
 .notes-container {
   background-color: rgb(163, 163, 163);
   position: relative;
@@ -137,7 +155,7 @@ body {
 }
 .note-header {
   font-size: 33px;
-  margin-bottom: 30px;
+  margin-bottom: 1rem;
   width: 100%;
 }
 .note-body {
