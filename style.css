@@ -20,6 +20,9 @@ body {
   padding: 0;
   margin: 0;
 }
+svg {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+}
 .sidebar {
   background-color: rgb(32, 25, 32);
   width: 250px;
@@ -50,11 +53,12 @@ body {
 .new-btn {
   left: 120px;
 }
+
 .search-btn {
   left: 160px;
 }
 .sort-btn {
-  left: 200px;
+  left: 201px;
 }
 .btn-container:hover {
   background-color: rgba(171, 152, 184, 0.274);
@@ -98,13 +102,13 @@ body {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .new-description {
-  left: 97px;
+  left: 100px;
 }
 .search-description {
   left: 148px;
 }
 .sort-description {
-  left: 196px;
+  left: 200px;
 }
 .hidden {
   display: none;
@@ -136,12 +140,7 @@ body {
 }
 .note--active,
 .note-title:hover {
-  background: rgb(56, 36, 62);
-  background: linear-gradient(
-    90deg,
-    rgba(56, 36, 62, 1) 0%,
-    rgba(82, 53, 108, 1) 100%
-  );
+  background-color: rgba(56, 36, 62, 1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .notes-container {
@@ -199,4 +198,34 @@ body {
   background-color: rgba(92, 89, 89, 0.582);
   transition: all 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.date-container {
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-family: 'Source Sans Pro', sans-serif;
+  position: absolute;
+  margin-top: -0.47rem;
+  padding: 0.3rem;
+  border-radius: 5px;
+  left: 260px;
+  z-index: 3;
+  background-color: rgba(56, 36, 62, 1);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  visibility: hidden;
+}
+.date-container:before {
+  content: '';
+  position: absolute;
+  height: 0px;
+  width: 0px;
+  top: 16px;
+  left: -10px; /* 1px buffer for zooming problems while rendering*/
+  border-width: 5px;
+  border-color: transparent rgba(56, 36, 62, 1) transparent transparent;
+  border-style: solid;
+  z-index: 0;
+}
+#title-bar:hover .date-container {
+  visibility: visible;
 }

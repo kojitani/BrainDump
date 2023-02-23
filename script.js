@@ -30,18 +30,18 @@ class Notes {
     this.body = body;
   }
 }
-const test1 = new Notes(
-  'Untitled',
-  'Test 1',
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita vel odit mollitia sunt quibusdam, reprehenderit saepe totam, nesciunt eaque numquam excepturi dolorem aspernatur repudiandae ratione quo quisquam veniam quos ipsum n',
-  832317371
-);
+// const test1 = new Notes(
+//   'Untitled',
+//   'Test 1',
+//   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita vel odit mollitia sunt quibusdam, reprehenderit saepe totam, nesciunt eaque numquam excepturi dolorem aspernatur repudiandae ratione quo quisquam veniam quos ipsum n',
+//   832317371
+// );
 
 const noteContainer = document.querySelector('.notes-container');
 const notesTitles = document.querySelector('.notes-titles');
 const titleList = document.querySelectorAll('.note-title');
 const delBtns = document.querySelectorAll('del-btn');
-
+const titleBars = document.querySelectorAll('#title-bar');
 class App {
   #notes = [];
 
@@ -58,6 +58,12 @@ class App {
     notesTitles.addEventListener('click', this._deleteNote.bind(this));
   }
 
+  _setNew() {
+    noteBody.value = '';
+    noteBody.blur();
+    noteHeader.value = 'Untitled';
+    noteHeader.select();
+  }
   _newNote() {
     this._removeHidden();
     this._setNew();
@@ -65,24 +71,25 @@ class App {
     this.#notes.push(note);
     this._noteActiveReset();
     console.log(this.#notes);
+    this._addNote(note);
+  }
+  _addNote(note) {
     notesTitles.insertAdjacentHTML(
       'afterbegin',
-      `<div class='title-bar' id='title-bar'><li class="note-title note--active" id="note-title" data-id="${note.id}">${note.title}</li><img class="del-btn" src="trash-1_bold.svg" />
+      `<div class='title-bar' id='title-bar'><li class="note-title 
+      note--active" id="note-title" 
+      data-id="${note.id}">${note.title}</li>
+      <img class="del-btn" src="trash-1_bold.svg"/>
+      <div class="date-container">
+          Last modified at ${String(note.date).slice(0, 24)}
+     <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
+      </div>
       </div>`
     );
   }
-  _setNew() {
-    noteBody.value = '';
-    noteBody.blur();
-    noteHeader.value = 'Untitled';
-    noteHeader.select();
-  }
   _loadNotes() {
     this.#notes.forEach(note => {
-      notesTitles.insertAdjacentHTML(
-        'afterbegin',
-        `<li class="note-title" id="note-title" data-id="${note.id}">${note.title}</li>`
-      );
+      this._addNote(note);
       // noteBody.value = note.body;
     });
   }
@@ -108,6 +115,8 @@ class App {
     note.body = noteBody.value;
     note.header = note.title = noteHeader.value;
     console.log(note.header, note.body);
+    this._modifiedDate(note);
+    console.log(note);
   }
   _noteActiveReset() {
     document
@@ -147,6 +156,24 @@ class App {
       }
     }
   }
+  _modifiedDate(note) {
+    const lastModify = String(new Date()).slice(0, 24);
+    note.date = lastModify;
+    const noteTarget = document
+      .querySelector('.note--active')
+      .closest('#title-bar').children[2];
+
+    const creationDate = String(new Date(Number(note.id))).slice(0, 24);
+
+    noteTarget.innerHTML = `Last modified at ${lastModify} <br>Created at ${creationDate}`;
+  }
+  _setLocalStorage() {}
+  _getLocalStorage() {}
+  _searchFunction() {}
+  _sortByLastModified() {}
+  _sortByCreationDate() {}
+  _sortAlphabeticallyAscending() {}
+  _sortAlphabeticallyDescending() {}
 }
 
 const app = new App();
