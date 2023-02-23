@@ -13,35 +13,25 @@
       <div class="options-container">
         <div class="title-container"><p class="sidebar-title">Notes</p></div>
 
-        <!-- prettier-ignore -->
-        <button class="new-btn btn-container" id='new-btn'>
-            <svg width="25" height="25" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9 16C9 12.134 12.134 9 16 9H42C43.6569 9 45 10.3431 45 12C45 13.6569 43.6569 15 42 15H16C15.4477 15 15 15.4477 15 16V42C15 43.6569 13.6569 45 12 45C10.3431 45 9 43.6569 9 42V16ZM68 33.9117C69.6569 33.9117 71 35.2549 71 36.9117V64C71 67.866 67.866 71 64 71H36.9117C35.2549 71 33.9117 69.6569 33.9117 68C33.9117 66.3431 35.2549 65 36.9117 65H64C64.5523 65 65 64.5523 65 64V36.9117C65 35.2549 66.3431 33.9117 68 33.9117ZM68.4001 23.139C69.9605 21.5786 69.9605 19.0488 68.4001 17.4884L62.7433 11.8315C61.1795 10.2677 58.644 10.2677 57.0802 11.8315L18.0554 50.8563C16.7709 52.1408 15.9618 53.8242 15.7612 55.6297L14.7983 64.2957C14.7258 64.9483 15.2772 65.4996 15.9297 65.4271L24.5957 64.4642C26.4012 64.2636 28.0846 63.4545 29.3691 62.17L68.4001 23.139ZM58.4968 33.0409L47.1893 21.7334L50.0178 18.905L61.3253 30.2125L58.4968 33.0409Z" fill="#9146FF" />
-                </svg>
-          </button>
+        <button class="new-btn btn-container" id="new-btn">
+          <img src="note.svg" />
+          <p class="new-description">New note</p>
+        </button>
         <button class="search-btn btn-container" id="search-btn">
-          <!-- prettier-ignore -->
-          <svg width="25" height="25" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M63.4533 67.7489L50.7249 55.017C49.5542 53.846 49.5543 51.9477 50.7251 50.7769C51.8962 49.6058 53.7949 49.606 54.9658 50.7772L67.6943 63.5091C68.865 64.6801 68.8648 66.5783 67.694 67.7492C66.5229 68.9202 64.6242 68.9201 63.4533 67.7489Z" fill="#9146FF" />
-                  <path d="M50.7249 55.017L52.1393 53.603L52.1393 53.603L50.7249 55.017ZM63.4533 67.7489L64.8677 66.3348L63.4533 67.7489ZM54.9658 50.7772L53.5514 52.1912L53.5514 52.1912L54.9658 50.7772ZM67.6943 63.5091L69.1087 62.095H69.1087L67.6943 63.5091ZM67.694 67.7492L69.1082 69.1634L69.1082 69.1634L67.694 67.7492ZM49.3104 56.431L62.0389 69.1629L64.8677 66.3348L52.1393 53.603L49.3104 56.431ZM49.3109 49.3627C47.3591 51.3145 47.3589 54.4789 49.3104 56.431L52.1393 53.603C51.7494 53.213 51.7495 52.581 52.1393 52.1911L49.3109 49.3627ZM56.3802 49.3632C54.4283 47.4107 51.2631 47.4105 49.3109 49.3627L52.1393 52.1911C52.5293 51.8012 53.1615 51.8012 53.5514 52.1912L56.3802 49.3632ZM69.1087 62.095L56.3802 49.3632L53.5514 52.1912L66.2799 64.9231L69.1087 62.095ZM69.1082 69.1634C71.06 67.2116 71.0602 64.0471 69.1087 62.095L66.2799 64.9231C66.6697 65.313 66.6696 65.9451 66.2798 66.3349L69.1082 69.1634ZM62.0389 69.1629C63.9909 71.1153 67.156 71.1155 69.1082 69.1634L66.2798 66.3349C65.8898 66.7249 65.2576 66.7248 64.8677 66.3348L62.0389 69.1629Z" fill="#9146FF" />
-                  <path d="M15.5965 29.0688C17.3583 22.4939 22.4939 17.3584 29.0687 15.5966C35.6436 13.8349 42.6589 15.7147 47.4721 20.5278C52.2852 25.341 54.165 32.3563 52.4033 38.9312C50.6415 45.5061 45.506 50.6416 38.9311 52.4034C32.3562 54.1651 25.3409 52.2853 20.5277 47.4722C15.7146 42.659 13.8348 35.6437 15.5965 29.0688Z" fill="#9146FF" />
-                </svg>
+          <img src="search.svg" />
+          <p class="search-description">Search</p>
         </button>
 
-        <!-- prettier-ignore -->
-        <button class="sort-btn btn-container" id='sort-btn'>
-            <svg width="25" height="25" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M23 55C23 56.6569 21.6569 58 20 58C18.3431 58 17 56.6569 17 55L23 55ZM17 16C17 14.3431 18.3431 13 20 13C21.6569 13 23 14.3431 23 16H17ZM17 55L17 16H23L23 55L17 55Z" fill="#9146FF" />
-                  <path d="M25.818 55L14.182 55C13.0078 55 12.4197 56.4197 13.25 57.25L18.5858 62.5858C19.3668 63.3668 20.6332 63.3668 21.4142 62.5858L26.75 57.25C27.5803 56.4197 26.9923 55 25.818 55Z" fill="#9146FF" stroke="#9146FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M37 22H45" stroke="#9146FF" stroke-width="6" stroke-linecap="round" />
-                  <path d="M37 34H53" stroke="#9146FF" stroke-width="6" stroke-linecap="round" />
-                  <path d="M37 46L61 46" stroke="#9146FF" stroke-width="6" stroke-linecap="round" />
-                  <path d="M37 58L69 58" stroke="#9146FF" stroke-width="6" stroke-linecap="round" />
-                </svg></button>
-        <p class="new-description hidden">New note</p>
-        <p class="search-description hidden">Search</p>
-        <p class="sort-description hidden">Sort</p>
+        <button class="sort-btn btn-container" id="sort-btn">
+          <img src="sort.svg" />
+          <p class="sort-description">Sort</p>
+        </button>
       </div>
+      <div class="sort-options hidden">
+        <p class="sort-modified">Sort by last modified date</p>
+        <p class="sort-creation">Sort by creation date</p>
+      </div>
+      <div title="Click to close" class="overlay hidden"></div>
       <div class="notes-list">
         <ul class="notes-titles">
           <!-- <div class="title-bar">
@@ -62,8 +52,11 @@
     </div>
     <main>
       <div class="notes-container">
-        <textarea rows="1" class="note-header note--hidden">Untitled</textarea>
+        <textarea rows="1" spellcheck="false" class="note-header note--hidden">
+Untitled</textarea
+        >
         <textarea
+          spellcheck="false"
           rows="1"
           placeholder="Type here..."
           class="note-body note--hidden"

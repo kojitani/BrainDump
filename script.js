@@ -1,6 +1,7 @@
 const newBtn = document.querySelector('.new-btn');
 const searchBtn = document.querySelector('.search-btn');
 const sortBtn = document.querySelector('.sort-btn');
+const delBtns = document.querySelectorAll('del-btn');
 const btnContainers = document.querySelectorAll('.btn-container');
 
 const newBtnDescription = document.querySelector('.new-description');
@@ -10,16 +11,14 @@ const sortBtnDescription = document.querySelector('.sort-description');
 const noteTitle = document.querySelector('.note-title');
 const noteHeader = document.querySelector('.note-header');
 const noteBody = document.querySelector('.note-body');
-newBtn.addEventListener('click', e => {
-  console.log(e.target.closest('#new-btn'));
-});
-searchBtn.addEventListener('click', e => {
-  console.log(e.target.closest('#search-btn'));
-});
-sortBtn.addEventListener('click', e => {
-  console.log(e.target.closest('#sort-btn'));
-});
+const noteContainer = document.querySelector('.notes-container');
+const notesTitles = document.querySelector('.notes-titles');
 
+const titleList = document.querySelectorAll('.note-title');
+const titleBars = document.querySelectorAll('#title-bar');
+const overlay = document.querySelector('.overlay');
+const sortOptions = document.querySelector('.sort-options');
+const body = document.querySelector('body');
 class Notes {
   date = String(new Date()).slice(0, 24);
   id = Date.now() + '';
@@ -29,24 +28,12 @@ class Notes {
     this.body = body;
   }
 }
-// const test1 = new Notes(
-//   'Untitled',
-//   'Test 1',
-//   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita vel odit mollitia sunt quibusdam, reprehenderit saepe totam, nesciunt eaque numquam excepturi dolorem aspernatur repudiandae ratione quo quisquam veniam quos ipsum n',
-//   832317371
-// );
 
-const noteContainer = document.querySelector('.notes-container');
-const notesTitles = document.querySelector('.notes-titles');
-const titleList = document.querySelectorAll('.note-title');
-const delBtns = document.querySelectorAll('del-btn');
-const titleBars = document.querySelectorAll('#title-bar');
 class App {
   #notes = [];
 
   constructor() {
     this._getLocalStorage();
-
     this._noteResize();
     newBtn.addEventListener('click', this._newNote.bind(this));
     noteContainer.addEventListener('input', this._noteResize);
@@ -56,12 +43,15 @@ class App {
     noteHeader.addEventListener('input', this._updateNoteData.bind(this));
     noteBody.addEventListener('input', this._updateNoteData.bind(this));
     notesTitles.addEventListener('click', this._deleteNote.bind(this));
+    sortBtn.addEventListener('click', this._showSortOptions);
+    body.addEventListener('click', this._chooseSortOptions.bind(this));
   }
 
   _setNew() {
     noteBody.value = '';
     noteBody.blur();
     noteHeader.value = 'Untitled';
+    noteHeader.focus();
     noteHeader.select();
   }
   _newNote() {
@@ -72,7 +62,6 @@ class App {
     console.log(this.#notes);
     this._addNote(note);
 
-    // SET LOCAL STORAGE
     this.#notes.push(note);
     this._setLocalStorage();
   }
@@ -92,10 +81,11 @@ class App {
   }
   _loadNotes() {
     this.#notes.forEach((note, i) => {
-      if (i === this.#notes.length - 1) {
-        notesTitles.insertAdjacentHTML(
-          'afterbegin',
-          `<div class='title-bar' id='title-bar'><li class="note-title note--active" id="note-title" 
+      notesTitles.insertAdjacentHTML(
+        'afterbegin',
+        `<div class='title-bar' id='title-bar'><li class="note-title ${
+          i === this.#notes.length - 1 ? 'note--active' : ''
+        }" id="note-title" 
           data-id="${note.id}">${note.title}</li>
           <img class="del-btn" src="trash-1_bold.svg"/>
           <div class="date-container">
@@ -103,24 +93,14 @@ class App {
          <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
           </div>
           </div>`
-        );
-        this._removeHidden();
-        noteHeader.value = note.header;
-        noteBody.value = note.body;
-        noteBody.focus();
-      } else {
-        notesTitles.insertAdjacentHTML(
-          'afterbegin',
-          `<div class='title-bar' id='title-bar'><li class="note-title" id="note-title" 
-          data-id="${note.id}">${note.title}</li>
-          <img class="del-btn" src="trash-1_bold.svg"/>
-          <div class="date-container">
-              Last modified at ${note.date}
-         <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
-          </div>
-          </div>`
-        );
-      }
+      );
+
+      noteHeader.value = note.header;
+      noteBody.value = note.body;
+      this._removeHidden();
+      this._noteResize();
+      noteBody.blur();
+      noteBody.focus();
     });
   }
   _clickNote(e) {
@@ -186,12 +166,13 @@ class App {
   }
   _modifiedDate(note) {
     const lastModify = String(new Date()).slice(0, 24);
+    console.log(Date.parse(lastModify));
     const creationDate = String(new Date(Number(note.id))).slice(0, 24);
     note.date = lastModify;
     const noteTarget = document
       .querySelector('.note--active')
       .closest('#title-bar').children[2];
-    noteTarget.innerHTML = `Last modified at ${lastModify} <br>Created at ${creationDate}`;
+    noteTarget.innerHTML = `Last modified at ${lastModify}<br>Created at ${creationDate}`;
     this._setLocalStorage();
   }
   _setLocalStorage() {
@@ -206,32 +187,39 @@ class App {
       this._loadNotes();
     });
   }
+  _showSortOptions() {
+    sortOptions.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+  }
+  _chooseSortOptions(e) {
+    if (e.target.classList.contains('overlay')) {
+      sortOptions.classList.add('hidden');
+      overlay.classList.add('hidden');
+    }
+    if (e.target.classList.contains('sort-modified')) {
+      this._sortByLastModified();
+    }
+    if (e.target.classList.contains('sort-creation')) {
+      this._sortByCreationDate();
+    }
+  }
+  _sortByLastModified() {
+    const sortLastModifiedArr = this.#notes.sort(
+      (a, b) => Date.parse(a.date) - Date.parse(b.date)
+    );
+    this._refreshNotesList();
+  }
+  _sortByCreationDate() {
+    const sortCreationDateArr = this.#notes.sort(
+      (a, b) => new Date(Number(a.id)) - new Date(Number(b.id))
+    );
+    this._refreshNotesList();
+  }
+  _refreshNotesList() {
+    this._setLocalStorage();
+    location.reload();
+  }
   _searchFunction() {}
-  _sortByLastModified() {}
-  _sortByCreationDate() {}
-  _sortAlphabeticallyAscending() {}
-  _sortAlphabeticallyDescending() {}
 }
 
 const app = new App();
-
-btnContainers.forEach(btn =>
-  btn.addEventListener('mouseenter', e => {
-    if (e.target.classList.contains('new-btn'))
-      newBtnDescription.classList.remove('hidden');
-    if (e.target.classList.contains('search-btn'))
-      searchBtnDescription.classList.remove('hidden');
-    if (e.target.classList.contains('sort-btn'))
-      sortBtnDescription.classList.remove('hidden');
-  })
-);
-btnContainers.forEach(btn =>
-  btn.addEventListener('mouseleave', e => {
-    if (e.target.classList.contains('new-btn'))
-      newBtnDescription.classList.add('hidden');
-    if (e.target.classList.contains('search-btn'))
-      searchBtnDescription.classList.add('hidden');
-    if (e.target.classList.contains('sort-btn'))
-      sortBtnDescription.classList.add('hidden');
-  })
-);
