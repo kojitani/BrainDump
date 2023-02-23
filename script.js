@@ -1,11 +1,9 @@
 const newBtn = document.querySelector('.new-btn');
-const searchBtn = document.querySelector('.search-btn');
 const sortBtn = document.querySelector('.sort-btn');
 const delBtns = document.querySelectorAll('del-btn');
 const btnContainers = document.querySelectorAll('.btn-container');
 
 const newBtnDescription = document.querySelector('.new-description');
-const searchBtnDescription = document.querySelector('.search-description');
 const sortBtnDescription = document.querySelector('.sort-description');
 
 const noteTitle = document.querySelector('.note-title');
@@ -19,6 +17,7 @@ const titleBars = document.querySelectorAll('#title-bar');
 const overlay = document.querySelector('.overlay');
 const sortOptions = document.querySelector('.sort-options');
 const body = document.querySelector('body');
+
 class Notes {
   date = String(new Date()).slice(0, 24);
   id = Date.now() + '';
@@ -34,7 +33,7 @@ class App {
 
   constructor() {
     this._getLocalStorage();
-    this._noteResize();
+    // this._noteResize();
     newBtn.addEventListener('click', this._newNote.bind(this));
     noteContainer.addEventListener('input', this._noteResize);
     noteContainer.addEventListener('keypress', this._headerEnterKey);
@@ -44,7 +43,7 @@ class App {
     noteBody.addEventListener('input', this._updateNoteData.bind(this));
     notesTitles.addEventListener('click', this._deleteNote.bind(this));
     sortBtn.addEventListener('click', this._showSortOptions);
-    body.addEventListener('click', this._chooseSortOptions.bind(this));
+    body.addEventListener('click', this._hideOverlays.bind(this));
   }
 
   _setNew() {
@@ -55,7 +54,7 @@ class App {
     noteHeader.select();
   }
   _newNote() {
-    this._removeHidden();
+    this._removeNoteHidden();
     this._setNew();
     const note = new Notes('Untitled', 'Untitled', '');
     this._noteActiveReset();
@@ -97,17 +96,21 @@ class App {
 
       noteHeader.value = note.header;
       noteBody.value = note.body;
-      this._removeHidden();
-      this._noteResize();
-      noteBody.blur();
-      noteBody.focus();
+
+      ////////////// FIX THIS AFTER LEARNING ABOUT ASYNC FUNCTIONS/////////////////
+      setTimeout(() => {
+        this._removeNoteHidden();
+        this._noteResize();
+        noteBody.blur();
+        noteBody.focus();
+      }, 100);
     });
   }
   _clickNote(e) {
     const noteTarget = e.target.closest('#note-title');
     if (!noteTarget) return;
     this._noteActiveReset();
-    this._removeHidden();
+    this._removeNoteHidden();
     noteTarget.classList.add('note--active');
     // FIND THE ACTIVE NOTE AND UPDATE VALUES
     const note = this.#notes.find(
@@ -141,10 +144,13 @@ class App {
     );
     this._setLocalStorage();
     e.target.closest('#title-bar').remove();
+    this._addNoteHidden();
+  }
+  _addNoteHidden() {
     noteHeader.classList.add('note--hidden');
     noteBody.classList.add('note--hidden');
   }
-  _removeHidden() {
+  _removeNoteHidden() {
     noteHeader.classList.remove('note--hidden');
     noteBody.classList.remove('note--hidden');
   }
@@ -191,7 +197,7 @@ class App {
     sortOptions.classList.remove('hidden');
     overlay.classList.remove('hidden');
   }
-  _chooseSortOptions(e) {
+  _hideOverlays(e) {
     if (e.target.classList.contains('overlay')) {
       sortOptions.classList.add('hidden');
       overlay.classList.add('hidden');
@@ -219,7 +225,5 @@ class App {
     this._setLocalStorage();
     location.reload();
   }
-  _searchFunction() {}
 }
-
 const app = new App();
