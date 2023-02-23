@@ -74,7 +74,7 @@ class App {
 
     // SET LOCAL STORAGE
     this.#notes.push(note);
-    this._setLocalStorage(note);
+    this._setLocalStorage();
   }
   _addNote(note) {
     notesTitles.insertAdjacentHTML(
@@ -100,7 +100,7 @@ class App {
           <img class="del-btn" src="trash-1_bold.svg"/>
           <div class="date-container">
               Last modified at ${note.date}
-         <br/>Created at ${note.date}
+         <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
           </div>
           </div>`
         );
@@ -116,7 +116,7 @@ class App {
           <img class="del-btn" src="trash-1_bold.svg"/>
           <div class="date-container">
               Last modified at ${note.date}
-         <br/>Created at ${note.date}
+         <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
           </div>
           </div>`
         );
@@ -137,15 +137,6 @@ class App {
     noteHeader.value = note.header;
     this._noteResize();
     noteBody.focus();
-  }
-  _updateNoteData() {
-    const noteTarget = document.querySelector('.note--active').dataset.id;
-    const note = this.#notes.find(note => String(note.id) === noteTarget);
-
-    note.body = noteBody.value;
-    note.header = note.title = noteHeader.value;
-    this._modifiedDate(note);
-    this._setLocalStorage();
   }
   _noteActiveReset() {
     document
@@ -168,6 +159,7 @@ class App {
     this.#notes.forEach((note, i) =>
       String(note.id) === noteTarget ? this.#notes.splice(i, 1) : note
     );
+    this._setLocalStorage();
     e.target.closest('#title-bar').remove();
     noteHeader.classList.add('note--hidden');
     noteBody.classList.add('note--hidden');
@@ -183,6 +175,15 @@ class App {
       noteBody.focus();
     }
   }
+  _updateNoteData() {
+    const noteTarget = document.querySelector('.note--active').dataset.id;
+    const note = this.#notes.find(note => String(note.id) === noteTarget);
+
+    note.body = noteBody.value;
+    note.header = note.title = noteHeader.value;
+    this._modifiedDate(note);
+    this._setLocalStorage();
+  }
   _modifiedDate(note) {
     const lastModify = String(new Date()).slice(0, 24);
     const creationDate = String(new Date(Number(note.id))).slice(0, 24);
@@ -193,16 +194,17 @@ class App {
     noteTarget.innerHTML = `Last modified at ${lastModify} <br>Created at ${creationDate}`;
     this._setLocalStorage();
   }
-  _setLocalStorage(note) {
-    // this.#notes.push(note);
-    localStorage.setItem('notes', JSON.stringify(this.#notes));
+  _setLocalStorage() {
+    chrome.storage.local.set({ notes: JSON.stringify(this.#notes) });
   }
   _getLocalStorage() {
-    const notes = JSON.parse(localStorage.getItem('notes'));
-    if (!notes) return;
-    notes.forEach(note => this.#notes.push(note));
-    console.log(notes);
-    this._loadNotes();
+    chrome.storage.local.get(['notes']).then(result => {
+      const notes = JSON.parse(result.notes);
+      if (!notes) return;
+      notes.forEach(note => this.#notes.push(note));
+      console.log(notes);
+      this._loadNotes();
+    });
   }
   _searchFunction() {}
   _sortByLastModified() {}
@@ -215,7 +217,6 @@ const app = new App();
 
 btnContainers.forEach(btn =>
   btn.addEventListener('mouseenter', e => {
-    console.log(e.target);
     if (e.target.classList.contains('new-btn'))
       newBtnDescription.classList.remove('hidden');
     if (e.target.classList.contains('search-btn'))
