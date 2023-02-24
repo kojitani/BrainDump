@@ -56,6 +56,7 @@ class App {
   _newNote() {
     this._removeNoteHidden();
     this._setNew();
+    this._noteResize();
     const note = new Notes('Untitled', 'Untitled', '');
     this._noteActiveReset();
     console.log(this.#notes);
@@ -71,7 +72,9 @@ class App {
       
       <li class="note-title note--active" id="note-title" 
       data-id="${note.id}">${note.title}</li> 
-      <img class="del-btn" src="trash-1_bold.svg"/>
+      <div class='del-btn-container' title='Delete this note'>
+      <img class="del-btn"  src="trash-1_bold.svg"/>
+      </div>
       <div class="date-container">
           Last modified at ${note.date}
       <br/>Created at ${note.date}
@@ -89,7 +92,9 @@ class App {
               i === this.#notes.length - 1 ? 'note--active' : ''
             }" id="note-title" 
             data-id="${note.id}">${note.title}</li>
+            <div class='del-btn-container'  title='Delete this note'>
             <img class="del-btn" src="trash-1_bold.svg"/>
+            </div>
             <div class="date-container">
               Last modified at ${note.date}
          <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
@@ -168,7 +173,6 @@ class App {
   _updateNoteData() {
     const noteTarget = document.querySelector('.note--active').dataset.id;
     const note = this.#notes.find(note => String(note.id) === noteTarget);
-
     note.body = noteBody.value;
     note.header = note.title = noteHeader.value;
     this._modifiedDate(note);
@@ -214,15 +218,11 @@ class App {
     }
   }
   _sortByLastModified() {
-    const sortLastModifiedArr = this.#notes.sort(
-      (a, b) => Date.parse(a.date) - Date.parse(b.date)
-    );
+    this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
     this._refreshNotesList();
   }
   _sortByCreationDate() {
-    const sortCreationDateArr = this.#notes.sort(
-      (a, b) => new Date(Number(a.id)) - new Date(Number(b.id))
-    );
+    this.#notes.sort((a, b) => new Date(Number(a.id)) - new Date(Number(b.id)));
     this._refreshNotesList();
   }
   _refreshNotesList() {

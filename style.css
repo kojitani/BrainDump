@@ -35,7 +35,7 @@ svg {
   position: relative;
   width: 100%;
   padding: 0.5rem 1rem;
-  background-color: rgb(14, 9, 17);
+  background-color: rgb(19, 18, 20);
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 }
 
@@ -56,6 +56,7 @@ svg {
   padding: 0;
   margin-top: 0.15rem;
   padding-left: 0.5rem;
+  cursor: pointer;
 }
 .btn-container {
   position: absolute;
@@ -83,10 +84,10 @@ svg {
   position: absolute;
   white-space: nowrap;
   top: 41px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-size: 14px;
   color: rgb(255, 255, 255);
-  padding: 0.3rem;
+  padding: 0.1rem 0.3rem;
   margin: 0;
   text-align: center;
   background: rgb(149, 92, 165);
@@ -101,11 +102,11 @@ svg {
   z-index: 2;
 }
 .new-description {
-  left: -20px;
+  left: -14px;
 }
 
 .sort-description {
-  left: -22px;
+  left: -17px;
 }
 
 .new-btn:hover .new-description {
@@ -124,10 +125,11 @@ svg {
 }
 .notes-titles {
   margin: 0;
-  padding: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  overflow: hidden;
 }
 .note-title {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Karla', sans-serif;
   font-size: 16px;
   line-height: 1.7rem;
   color: white;
@@ -137,14 +139,27 @@ svg {
   overflow-x: hidden;
   cursor: pointer;
   padding-left: 0.3rem;
-  width: 210px;
+  width: 100%;
   min-height: 27.2px;
   margin-bottom: 0.2rem;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
   text-overflow: ellipsis;
+  transform: translateX(10%);
+  transition: transform 0.5s ease;
+  background-color: rgb(50, 21, 61);
+  border: 2px solid rgb(48, 34, 58);
 }
+
 .note-title:hover,
 .note--active {
-  background-color: rgba(56, 36, 62, 1);
+  border: 2px solid rgb(68, 45, 73);
+  background: rgb(149, 92, 165);
+  background: linear-gradient(
+    90deg,
+    rgba(149, 92, 165, 1) 0%,
+    rgba(131, 62, 190, 1) 100%
+  );
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .notes-container {
@@ -187,16 +202,30 @@ svg {
 }
 .title-bar {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
+  /* transform: translateX(10%); */
+  transition: all 0.5s ease;
+}
+
+.del-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 15px;
+  width: 15px;
+  margin-left: 1.5px;
+  margin-top: 1.5px;
+  display: block;
+  transition: all 0.5s ease;
+  transform: translateX(350%);
+  /* background-color: white; */
 }
 
 .del-btn {
   cursor: pointer;
-  margin-top: 0.23rem;
-  margin-right: -0.16rem;
+  margin: 0.2rem -0.1rem;
   border-radius: 5px;
-  height: 20px;
   transition: all 0.3s ease;
 }
 .del-btn:hover {
@@ -205,6 +234,7 @@ svg {
   transition: all 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
 .date-container {
   text-align: center;
   color: white;
@@ -215,10 +245,11 @@ svg {
   padding: 0.3rem;
   border-radius: 5px;
   left: 260px;
-  z-index: 3;
+  z-index: 11;
   background-color: rgba(56, 36, 62, 1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   visibility: hidden;
+  transform: translateX(10%);
 }
 .date-container:before {
   content: '';
@@ -230,19 +261,30 @@ svg {
   border-width: 5px;
   border-color: transparent rgba(56, 36, 62, 1) transparent transparent;
   border-style: solid;
-  z-index: 0;
+  z-index: 5;
 }
 #title-bar:hover .date-container {
   visibility: visible;
+  transform: translateX(0%);
 }
-/* #title-bar:hover {
-  transform: translateX(-15%);
-  transition: all 0.5s ease;
-} */
+#title-bar:hover .note-title {
+  transform: translateX(0%);
+  border: 2px solid rgb(68, 45, 73);
+  background: rgb(149, 92, 165);
+  background: linear-gradient(
+    90deg,
+    rgba(149, 92, 165, 1) 0%,
+    rgba(131, 62, 190, 1) 100%
+  );
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+#title-bar:hover .del-btn-container {
+  transform: translateX(201.5%);
+}
 .sort-options {
   position: absolute;
   white-space: nowrap;
-  background-color: rgb(32, 25, 32);
+  background-color: rgb(63, 61, 63);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
   color: white;
@@ -259,9 +301,9 @@ svg {
   height: 0px;
   width: 0px;
   top: 16.5px;
-  left: -10px; /* 1px buffer for zooming problems while rendering*/
+  left: -10px;
   border-width: 5px;
-  border-color: transparent rgb(32, 25, 32) transparent transparent;
+  border-color: transparent rgb(63, 61, 63) transparent transparent;
   border-style: solid;
   z-index: 5;
 }
