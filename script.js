@@ -67,13 +67,14 @@ class App {
   _addNote(note) {
     notesTitles.insertAdjacentHTML(
       'afterbegin',
-      `<div class='title-bar' id='title-bar'><li class="note-title 
-      note--active" id="note-title" 
-      data-id="${note.id}">${note.title}</li>
+      `<div class='title-bar' id='title-bar'>
+      
+      <li class="note-title note--active" id="note-title" 
+      data-id="${note.id}">${note.title}</li> 
       <img class="del-btn" src="trash-1_bold.svg"/>
       <div class="date-container">
           Last modified at ${note.date}
-     <br/>Created at ${note.date}
+      <br/>Created at ${note.date}
       </div>
       </div>`
     );
@@ -82,12 +83,14 @@ class App {
     this.#notes.forEach((note, i) => {
       notesTitles.insertAdjacentHTML(
         'afterbegin',
-        `<div class='title-bar' id='title-bar'><li class="note-title ${
-          i === this.#notes.length - 1 ? 'note--active' : ''
-        }" id="note-title" 
-          data-id="${note.id}">${note.title}</li>
-          <img class="del-btn" src="trash-1_bold.svg"/>
-          <div class="date-container">
+        `<div class='title-bar' id='title-bar'>
+          
+            <li class="note-title ${
+              i === this.#notes.length - 1 ? 'note--active' : ''
+            }" id="note-title" 
+            data-id="${note.id}">${note.title}</li>
+            <img class="del-btn" src="trash-1_bold.svg"/>
+            <div class="date-container">
               Last modified at ${note.date}
          <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
           </div>
@@ -96,8 +99,9 @@ class App {
 
       noteHeader.value = note.header;
       noteBody.value = note.body;
-
+      /////////////////////////////////////////////////////////////////////////////
       ////////////// FIX THIS AFTER LEARNING ABOUT ASYNC FUNCTIONS/////////////////
+      /////////////////////////////////////////////////////////////////////////////
       setTimeout(() => {
         this._removeNoteHidden();
         this._noteResize();
