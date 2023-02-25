@@ -133,7 +133,7 @@ svg {
 }
 .note-title {
   font-family: 'Source Sans Pro', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.7rem;
   color: white;
   list-style: none;
@@ -145,7 +145,6 @@ svg {
   padding-bottom: 0.2rem;
   padding-left: 0.3rem;
   width: 97%;
-  min-height: 27.2px;
   margin-bottom: 0.3rem;
   margin-left: -1.5rem;
   margin-right: -1.5rem;
@@ -169,13 +168,12 @@ svg {
 }
 .notes-container {
   background-color: rgb(19, 8, 19);
-
   width: 500px;
   height: 600px;
   position: absolute;
   top: 0;
   left: 300px;
-  padding: 2rem;
+  padding: 3rem;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -207,10 +205,8 @@ svg {
 }
 .title-bar {
   display: flex;
-  /* justify-content: space-between; */
   width: 100%;
-  /* transform: translateX(10%); */
-  transition: all 0.5s ease;
+  transition: all 0.8s ease;
 }
 
 .del-btn-container {
@@ -246,10 +242,10 @@ svg {
   font-size: 15px;
   font-family: 'Source Sans Pro', sans-serif;
   position: absolute;
-  margin-top: -0.5rem;
+  margin-top: -0.35rem;
   padding: 0.3rem;
   border-radius: 5px;
-  left: 310px;
+  left: 320px;
   z-index: 11;
   background-color: rgba(56, 36, 62, 1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -286,6 +282,7 @@ svg {
 #title-bar:hover .del-btn-container {
   transform: translateX(195%);
 }
+
 .sort-options {
   position: absolute;
   white-space: nowrap;
@@ -294,7 +291,7 @@ svg {
   border-radius: 10px;
   color: white;
   margin: 0;
-  padding: 0.3rem;
+  padding: 0.2rem;
   z-index: 5;
   top: 5px;
   left: 310px;
@@ -316,15 +313,19 @@ svg {
 .sort-creation {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 15px;
-  padding: 0.3rem;
+  padding: 0.4rem;
   border-radius: 5px;
-  margin: 0;
+  margin: 0.2rem;
 }
 .sort-modified:hover,
 .sort-creation:hover {
   border-radius: 5px;
   background-color: rgba(56, 36, 62, 1);
   cursor: pointer;
+}
+.sort--active {
+  border-radius: 5px;
+  background-color: rgba(56, 36, 62, 1);
 }
 .overlay {
   position: absolute;

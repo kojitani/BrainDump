@@ -15,9 +15,12 @@ const notesTitles = document.querySelector('.notes-titles');
 const titleList = document.querySelectorAll('.note-title');
 const titleBars = document.querySelectorAll('#title-bar');
 const overlay = document.querySelector('.overlay');
-const sortOptions = document.querySelector('.sort-options');
 const body = document.querySelector('body');
 const html = document.querySelector('html');
+
+const sortOptions = document.querySelector('.sort-options');
+const sortModified = document.querySelector('.sort-modified');
+const sortCreation = document.querySelector('.sort-creation');
 
 class Notes {
   date = String(new Date()).slice(0, 24);
@@ -31,10 +34,18 @@ class Notes {
 
 class App {
   #notes = [];
+  #order;
+  // #sorting = chrome.storage.local.get(['sortOrder']).then(result => {
+  //   this.#order = result.sortOrder;
+  // });
+  #sortLastModifiedDate = () =>
+    this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+  #sortCreationDate = () =>
+    this.#notes.sort((a, b) => new Date(Number(a.id)) - new Date(Number(b.id)));
 
   constructor() {
+    this._getSortingOrder();
     this._getLocalStorage();
-    // this._noteResize();
     newBtn.addEventListener('click', this._newNote.bind(this));
     noteContainer.addEventListener('input', this._noteResize);
     noteContainer.addEventListener('keypress', this._headerEnterKey);
@@ -185,14 +196,16 @@ class App {
   }
   _modifiedDate(note) {
     const lastModify = String(new Date()).slice(0, 24);
-    console.log(Date.parse(lastModify));
     const creationDate = String(new Date(Number(note.id))).slice(0, 24);
     note.date = lastModify;
     const noteTarget = document
       .querySelector('.note--active')
       .closest('#title-bar').children[2];
     noteTarget.innerHTML = `Last modified at ${lastModify}<br>Created at ${creationDate}`;
-    this._setLocalStorage();
+
+    this.#order === 'lastModified'
+      ? this.#sortLastModifiedDate()
+      : this.#sortCreationDate();
   }
   _setLocalStorage() {
     chrome.storage.local.set({ notes: JSON.stringify(this.#notes) });
@@ -210,6 +223,7 @@ class App {
     sortOptions.classList.remove('hidden');
     overlay.classList.remove('hidden');
   }
+
   _hideOverlays(e) {
     if (e.target.classList.contains('overlay')) {
       sortOptions.classList.add('hidden');
@@ -222,12 +236,33 @@ class App {
       this._sortByCreationDate();
     }
   }
+
+  _setSortingOrder(order) {
+    chrome.storage.local.set({ sortOrder: order });
+    this.#order = order;
+  }
+  _getSortingOrder() {
+    chrome.storage.local.get(['sortOrder']).then(result => {
+      if (!result) return;
+      this.#order = result.sortOrder;
+      if (result.sortOrder === 'lastModified') {
+        this.#sortLastModifiedDate();
+        sortModified.classList.add('sort--active');
+      }
+      if (result.sortOrder === 'creationDate') {
+        this.#sortCreationDate();
+        sortCreation.classList.add('sort--active');
+      }
+    });
+  }
   _sortByLastModified() {
-    this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+    this._setSortingOrder('lastModified');
+    this.#sortLastModifiedDate();
     this._refreshNotesList();
   }
   _sortByCreationDate() {
-    this.#notes.sort((a, b) => new Date(Number(a.id)) - new Date(Number(b.id)));
+    this._setSortingOrder('creationDate');
+    this.#sortCreationDate();
     this._refreshNotesList();
   }
   _refreshNotesList() {
