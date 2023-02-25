@@ -153,7 +153,11 @@ class App {
       String(note.id) === noteTarget ? this.#notes.splice(i, 1) : note
     );
     this._setLocalStorage();
-    e.target.closest('#title-bar').remove();
+    e.target.closest('#title-bar').style.transform = 'translateX(300%)';
+    setTimeout(() => {
+      e.target.closest('#title-bar').remove();
+    }, 300);
+
     this._addNoteHidden();
   }
   _addNoteHidden() {
@@ -232,19 +236,3 @@ class App {
   }
 }
 const app = new App();
-// html.style.zoom = 1;
-// let zoom = ((window.outerWidth - 10) / window.innerWidth) * 100;
-// console.log(zoom);
-// if (zoom > 230 && zoom < 240) {
-//   html.style.zoom = 0.9;
-//   console.log('0.9');
-// }
-// if (zoom > 240 && zoom < 300) {
-//   html.style.zoom = 0.75;
-//   console.log('0.75');
-// }
-// if (zoom > 300 && zoom < 330) {
-//   html.style.zoom = 0.65;
-//   console.log('0.65');
-// }
-// console.log(zoom);
