@@ -17,6 +17,7 @@ const titleBars = document.querySelectorAll('#title-bar');
 const overlay = document.querySelector('.overlay');
 const sortOptions = document.querySelector('.sort-options');
 const body = document.querySelector('body');
+const html = document.querySelector('html');
 
 class Notes {
   date = String(new Date()).slice(0, 24);
@@ -231,3 +232,19 @@ class App {
   }
 }
 const app = new App();
+// html.style.zoom = 1;
+// let zoom = ((window.outerWidth - 10) / window.innerWidth) * 100;
+// console.log(zoom);
+// if (zoom > 230 && zoom < 240) {
+//   html.style.zoom = 0.9;
+//   console.log('0.9');
+// }
+// if (zoom > 240 && zoom < 300) {
+//   html.style.zoom = 0.75;
+//   console.log('0.75');
+// }
+// if (zoom > 300 && zoom < 330) {
+//   html.style.zoom = 0.65;
+//   console.log('0.65');
+// }
+// console.log(zoom);
