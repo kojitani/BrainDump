@@ -74,25 +74,31 @@ svg {
   cursor: pointer;
 }
 .new-btn {
-  left: 220px;
+  left: 175px;
 }
 .sort-btn {
-  left: 258px;
+  left: 215px;
+}
+.settings-btn {
+  left: 255px;
 }
 .btn-container:hover {
   background-color: rgba(171, 152, 184, 0.274);
 }
 .new-description,
-.sort-description {
+.sort-description,
+.settings-description {
   position: absolute;
   white-space: nowrap;
   top: 41px;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
+  line-height: 26.4px;
   color: rgb(255, 255, 255);
-  padding: 0.2rem 0.3rem;
+  padding: 0.1rem 0.3rem;
   margin: 0;
   text-align: center;
+  vertical-align: middle;
   background: rgb(149, 92, 165);
   background: linear-gradient(
     90deg,
@@ -105,17 +111,22 @@ svg {
   z-index: 2;
 }
 .new-description {
-  left: -14px;
+  left: -17px;
 }
 
 .sort-description {
   left: -17px;
 }
-
+.settings-description {
+  left: -13px;
+}
 .new-btn:hover .new-description {
   visibility: visible;
 }
 .sort-btn:hover .sort-description {
+  visibility: visible;
+}
+.settings-btn:hover .settings-description {
   visibility: visible;
 }
 .hidden {
@@ -144,9 +155,11 @@ svg {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
   padding-left: 0.3rem;
-  width: 97%;
+  width: 95%;
+  /* HARDCODED TOTAL HEIGHT SO IF NOTE HAS NO HEADER IT WONT SHRINK */
+  height: 38.363px;
   margin-bottom: 0.3rem;
-  margin-left: -1.5rem;
+  margin-left: -1.25rem;
   margin-right: -1.5rem;
   text-overflow: ellipsis;
   transform: translateX(10%);
@@ -237,6 +250,9 @@ svg {
 }
 
 .date-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   color: white;
   font-size: 15px;
@@ -244,13 +260,13 @@ svg {
   position: absolute;
   margin-top: -0.35rem;
   padding: 0.3rem;
+  padding-top: -1rem;
   border-radius: 5px;
   left: 320px;
   z-index: 11;
   background-color: rgba(56, 36, 62, 1);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   visibility: hidden;
-  transform: translateX(10%);
 }
 .date-container:before {
   content: '';
@@ -266,7 +282,6 @@ svg {
 }
 #title-bar:hover .date-container {
   visibility: visible;
-  transform: translateX(0%);
 }
 #title-bar:hover .note-title {
   transform: translateX(0%);

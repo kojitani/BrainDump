@@ -1,5 +1,6 @@
 const newBtn = document.querySelector('.new-btn');
 const sortBtn = document.querySelector('.sort-btn');
+const settingsBtn = document.querySelector('.settings-btn');
 const delBtns = document.querySelectorAll('del-btn');
 const btnContainers = document.querySelectorAll('.btn-container');
 
@@ -35,9 +36,6 @@ class Notes {
 class App {
   #notes = [];
   #order;
-  // #sorting = chrome.storage.local.get(['sortOrder']).then(result => {
-  //   this.#order = result.sortOrder;
-  // });
   #sortLastModifiedDate = () =>
     this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   #sortCreationDate = () =>
