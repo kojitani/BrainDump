@@ -367,8 +367,186 @@ svg {
     zoom: 0.65;
   }
 }
-/* @media only screen and (min-width: 400px) {
-  html {
-    zoom: 0.65;
-  }
-} */
+
+.settings-box {
+  position: absolute;
+  top: 16.66%;
+  left: 25%;
+  width: 400px;
+  height: 400px;
+  background-color: rgb(25, 15, 26);
+  border-radius: 25px;
+  border: 2px solid rgb(44, 44, 44);
+  z-index: 5;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  transition: all 0.3s ease;
+}
+.settings-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  z-index: 4;
+}
+.settings-header,
+.notes-management,
+.font-settings {
+  font-family: 'Karla', sans-serif;
+  color: white;
+  position: absolute;
+  top: 15px;
+  left: 35px;
+  margin: 0;
+}
+.settings-header {
+  font-size: 30px;
+}
+.notes-management {
+  top: 80px;
+  font-size: 22px;
+}
+.font-settings {
+  top: 220px;
+  font-size: 22px;
+}
+.import-btn,
+.export-btn,
+.close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 17px;
+  background-color: rgb(41, 40, 40);
+  cursor: pointer;
+  position: absolute;
+  border-style: none;
+  border-radius: 10px;
+  gap: 10px;
+}
+.close-btn {
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+}
+.import-btn {
+  width: 80%;
+  left: 40px;
+  top: 120px;
+  padding: 0.5rem;
+}
+
+.export-btn {
+  width: 80%;
+  left: 40px;
+  top: 165px;
+  padding: 0.5rem;
+}
+.import,
+.export {
+  display: none;
+}
+.footer {
+  font-family: 'Karla', sans-serif;
+  font-size: 17px;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  margin: 0;
+  padding: 1rem;
+}
+.donation,
+.suggestion {
+  margin: 0;
+}
+.suggestion {
+  text-align: center;
+}
+.donation {
+  margin-left: 3rem;
+}
+.donation-link {
+  color: white;
+  margin-left: -0.5rem;
+}
+.donation:hover .coffee-icon {
+  scale: 1.2;
+  transition: all 0.5s ease;
+}
+.coffee-icon {
+  position: absolute;
+  left: 26px;
+  bottom: 22px;
+  margin: 0;
+  padding: 0;
+  transition: all 0.5s ease;
+}
+.suggestion-link {
+  color: white;
+}
+.font-slider-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  position: absolute;
+  width: 100%;
+  bottom: 90px;
+}
+.font-slider {
+  width: 80%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+.font-slider::-webkit-slider-runnable-track {
+  background: rgb(41, 40, 40);
+  height: 1rem;
+  border-radius: 10px;
+}
+.font-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+
+  /*custom styles*/
+  background-color: #9146ff;
+  border-radius: 50%;
+  height: 1rem;
+  width: 1rem;
+}
+.slider-caption {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  color: white;
+  font-family: 'Karla', sans-serif;
+}
+.slider-caption p {
+  text-align: center;
+}
+.smaller {
+  font-size: 15px;
+  margin: 0;
+  padding-left: 1rem;
+}
+.normal {
+  font-size: 20px;
+  margin: 0;
+  /* margin-left: 0.4rem; */
+  padding-left: 0.3rem;
+}
+.bigger {
+  font-size: 25px;
+  margin: 0;
+  padding: 0;
+}

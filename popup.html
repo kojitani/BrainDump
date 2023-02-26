@@ -16,17 +16,17 @@
         </div>
 
         <button class="new-btn btn-container" id="new-btn">
-          <img src="note.svg" />
+          <img src="note.svg" alt="Add note" />
           <p class="new-description">Add note</p>
         </button>
 
         <button class="sort-btn btn-container" id="sort-btn">
-          <img src="sort.svg" />
+          <img src="sort.svg" alt="Sort order" />
           <p class="sort-description">Sort order</p>
         </button>
 
         <button class="settings-btn btn-container" id="sort-btn">
-          <img src="settings.svg" />
+          <img src="settings.svg" alt="Settings" />
           <p class="settings-description">Settings</p>
         </button>
       </div>
@@ -70,5 +70,52 @@ Untitled</textarea
         ></textarea>
       </div>
     </main>
+    <div class="settings-overlay hidden"></div>
+    <div class="settings-box hidden">
+      <p class="settings-header">Settings</p>
+      <p class="notes-management">Note management</p>
+      <p class="font-settings">Font size</p>
+      <div class="font-slider-container">
+        <input class="font-slider" type="range" value="0" min="-10" max="10" />
+        <div class="slider-caption">
+          <p class="smaller">Smaller</p>
+          <p class="normal">Normal</p>
+          <p class="bigger">Bigger</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <footer class="donation">
+          <img class="coffee-icon" src="coffee.svg" />
+          <a
+            class="donation-link"
+            href="https://ko-fi.com/kotani"
+            target="_blank"
+            >Buy me a coffee</a
+          >
+        </footer>
+        <p class="suggestion">
+          Got any suggestions? <br /><a
+            class="suggestion-link"
+            href=""
+            target="_blank"
+            >Leave a review</a
+          >
+        </p>
+      </div>
+      <input type="file" class="import" />
+      <input type="file" class="export" />
+      <button class="import-btn">
+        <img src="import.svg" alt="Import button" />
+        Import notes
+      </button>
+      <button class="export-btn">
+        <img src="export.svg" alt="Export button" />
+        Export notes
+      </button>
+      <button class="close-btn">
+        <img src="close.svg" alt="Close button" />
+      </button>
+    </div>
   </body>
 </html>

@@ -23,6 +23,17 @@ const sortOptions = document.querySelector('.sort-options');
 const sortModified = document.querySelector('.sort-modified');
 const sortCreation = document.querySelector('.sort-creation');
 
+const settingsBox = document.querySelector('.settings-box');
+const settingsOverlay = document.querySelector('.settings-overlay');
+const closeBtn = document.querySelector('.close-btn');
+const fontSlider = document.querySelector('.font-slider');
+const noteHeaderFontSize = Number(
+  window.getComputedStyle(noteHeader).getPropertyValue('font-size').slice(0, -2)
+);
+const noteBodyFontSize = Number(
+  window.getComputedStyle(noteBody).getPropertyValue('font-size').slice(0, -2)
+);
+
 class Notes {
   date = String(new Date()).slice(0, 24);
   id = Date.now() + '';
@@ -36,6 +47,7 @@ class Notes {
 class App {
   #notes = [];
   #order;
+  #fontSize;
   #sortLastModifiedDate = () =>
     this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   #sortCreationDate = () =>
@@ -44,7 +56,7 @@ class App {
   constructor() {
     this._getSortingOrder();
     this._getLocalStorage();
-    newBtn.addEventListener('click', this._newNote.bind(this));
+    this._getFontSettings();
     noteContainer.addEventListener('input', this._noteResize);
     noteContainer.addEventListener('keypress', this._headerEnterKey);
     noteHeader.addEventListener('input', this._noteUpdateTitle);
@@ -52,8 +64,13 @@ class App {
     noteHeader.addEventListener('input', this._updateNoteData.bind(this));
     noteBody.addEventListener('input', this._updateNoteData.bind(this));
     notesTitles.addEventListener('click', this._deleteNote.bind(this));
-    sortBtn.addEventListener('click', this._showSortOptions);
     body.addEventListener('click', this._hideOverlays.bind(this));
+
+    newBtn.addEventListener('click', this._newNote.bind(this));
+    sortBtn.addEventListener('click', this._showSortOptions);
+    settingsBtn.addEventListener('click', this._openSettings);
+    closeBtn.addEventListener('click', this._closeSettings);
+    fontSlider.addEventListener('input', this._changeFontSize.bind(this));
   }
 
   _setNew() {
@@ -266,6 +283,35 @@ class App {
   _refreshNotesList() {
     this._setLocalStorage();
     location.reload();
+  }
+  _openSettings() {
+    settingsBox.classList.remove('hidden');
+    settingsOverlay.classList.remove('hidden');
+  }
+  _closeSettings() {
+    settingsBox.classList.add('hidden');
+    settingsOverlay.classList.add('hidden');
+  }
+  _updateFontSize() {
+    noteHeader.style.fontSize = noteHeaderFontSize + this.#fontSize + 'px';
+    noteBody.style.fontSize = noteBodyFontSize + this.#fontSize + 'px';
+    this._noteResize();
+  }
+  _changeFontSize(e) {
+    this._setFontSettings(Number(e.target.value));
+    this._updateFontSize();
+  }
+  _setFontSettings(size) {
+    chrome.storage.local.set({ fontSize: size });
+    this.#fontSize = size;
+  }
+  _getFontSettings() {
+    chrome.storage.local.get('fontSize').then(result => {
+      if (!result) return;
+      this.#fontSize = result.fontSize;
+      fontSlider.value = result.fontSize;
+      this._updateFontSize();
+    });
   }
 }
 const app = new App();
