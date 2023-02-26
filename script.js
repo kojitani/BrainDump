@@ -58,8 +58,8 @@ class App {
 
   constructor() {
     this._getSortingOrder();
-    this._getLocalStorage();
     this._getFontSettings();
+    this._getLocalStorage();
     noteContainer.addEventListener('input', this._noteResize);
     noteContainer.addEventListener('keypress', this._headerEnterKey);
     noteHeader.addEventListener('input', this._noteUpdateTitle);
@@ -105,7 +105,7 @@ class App {
       <li class="note-title note--active" id="note-title" 
       data-id="${note.id}">${note.title}</li> 
       <div class='del-btn-container' title='Delete this note'>
-      <img class="del-btn"  src="trash-1_bold.svg"/>
+      <img class="del-btn"  src="images/trash.svg"/>
       </div>
       <div class="date-container">
           Last modified at ${note.date}
@@ -125,7 +125,7 @@ class App {
             }" id="note-title" 
             data-id="${note.id}">${note.title}</li>
             <div class='del-btn-container'  title='Delete this note'>
-            <img class="del-btn" src="trash-1_bold.svg"/>
+            <img class="del-btn" src="images/trash.svg"/>
             </div>
             <div class="date-container">
               Last modified at ${note.date}
@@ -133,7 +133,6 @@ class App {
           </div>
           </div>`
       );
-      console.log(this.#notes);
       noteHeader.value = note.header;
       noteBody.value = note.body;
       /////////////////////////////////////////////////////////////////////////////
@@ -232,10 +231,10 @@ class App {
   }
   _getLocalStorage() {
     chrome.storage.local.get(['notes']).then(result => {
+      if (!result.notes) return;
       const notes = JSON.parse(result.notes);
       if (!notes) return;
       notes.forEach(note => this.#notes.push(note));
-      console.log(notes);
       this._loadNotes();
     });
   }
@@ -263,7 +262,7 @@ class App {
   }
   _getSortingOrder() {
     chrome.storage.local.get(['sortOrder']).then(result => {
-      if (!result) return;
+      if (!result.sortOrder) return;
       this.#order = result.sortOrder;
       if (result.sortOrder === 'lastModified') {
         this.#sortLastModifiedDate();
@@ -312,7 +311,7 @@ class App {
   }
   _getFontSettings() {
     chrome.storage.local.get('fontSize').then(result => {
-      if (!result) return;
+      if (!result.fontSize) return;
       this.#fontSize = result.fontSize;
       fontSlider.value = result.fontSize;
       this._updateFontSize();

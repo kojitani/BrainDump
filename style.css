@@ -3,6 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap');
 *,
 *::before,
 *::after {
@@ -37,8 +39,10 @@ svg {
   display: flex;
   position: relative;
   width: 100%;
-  padding: 0.5rem 1rem;
-  background-color: rgb(19, 18, 20);
+
+  height: 3rem;
+  padding-bottom: 0.5rem;
+  background-color: rgb(41, 40, 40);
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 }
 
@@ -46,10 +50,27 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.app-icon {
+  position: absolute;
+  top: 7.5px;
+  left: 10px;
+}
+.app-name {
+  position: absolute;
+  top: 18px;
+  left: 48px;
+  font-size: 18px;
+  font-family: 'Special Elite', sans-serif;
+  font-weight: 600;
+  color: white;
   margin: 0;
   padding: 0;
 }
-
 .sidebar-title {
   color: white;
   font-size: 25px;
@@ -69,19 +90,19 @@ svg {
   background-color: transparent;
   border-style: none;
   border-radius: 5px;
-  top: 3.8px;
+  top: 8.5px;
   margin: 0;
   padding: 0.3rem;
   cursor: pointer;
 }
 .new-btn {
-  left: 162px;
+  left: 175px;
 }
 .sort-btn {
-  left: 207px;
+  left: 215px;
 }
 .settings-btn {
-  left: 252px;
+  left: 255px;
 }
 .btn-container:hover {
   background-color: rgba(86, 83, 88, 0.274);
@@ -112,14 +133,14 @@ svg {
   z-index: 3;
 }
 .new-description {
-  left: -17px;
+  left: -14px;
 }
 
 .sort-description {
   left: -17px;
 }
 .settings-description {
-  left: -13px;
+  left: -12px;
 }
 .new-btn:hover .new-description {
   visibility: visible;
@@ -207,7 +228,7 @@ svg {
 .note-header {
   font-weight: 600;
   font-size: 33px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   width: 100%;
 }
 .note-body {
@@ -216,6 +237,7 @@ svg {
 }
 .note--hidden {
   opacity: 0;
+  visibility: hidden;
 }
 .title-bar {
   display: flex;
@@ -353,22 +375,6 @@ svg {
   height: 100%;
 }
 
-@media (min-width: 720px) and (max-width: 799px) {
-  html {
-    zoom: 0.9;
-  }
-}
-@media (min-width: 600px) and (max-width: 719px) {
-  html {
-    zoom: 0.8;
-  }
-}
-@media (min-width: 400px) and (max-width: 599px) {
-  html {
-    zoom: 0.65;
-  }
-}
-
 .settings-box {
   position: absolute;
   top: 16.66%;
@@ -388,7 +394,8 @@ svg {
   height: 100%;
   top: 0;
   left: 0;
-  background-color: transparent;
+  background-color: rgba(29, 29, 29, 0.308);
+  backdrop-filter: blur(3px);
   z-index: 4;
 }
 .settings-header,
@@ -409,7 +416,7 @@ svg {
   font-size: 22px;
 }
 .font-settings {
-  top: 223px;
+  top: 227px;
   font-size: 22px;
 }
 .import-btn,
@@ -505,7 +512,7 @@ svg {
   justify-content: center;
   position: absolute;
   width: 100%;
-  bottom: 95px;
+  bottom: 90px;
 }
 .font-slider {
   width: 80%;
@@ -524,9 +531,8 @@ svg {
 .font-slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
-
-  /*custom styles*/
   background-color: #9146ff;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   border-radius: 50%;
   height: 1rem;
   width: 1rem;
@@ -557,4 +563,20 @@ svg {
   font-size: 25px;
   margin: 0;
   padding: 0;
+}
+
+@media (min-width: 720px) and (max-width: 799px) {
+  html {
+    zoom: 0.9;
+  }
+}
+@media (min-width: 600px) and (max-width: 719px) {
+  html {
+    zoom: 0.8;
+  }
+}
+@media (min-width: 400px) and (max-width: 599px) {
+  html {
+    zoom: 0.65;
+  }
 }
