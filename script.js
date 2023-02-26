@@ -179,17 +179,17 @@ class App {
   _deleteNote(e) {
     if (!e.target.classList.contains('del-btn')) return;
     const noteTarget = e.target.closest('#title-bar').children[0].dataset.id;
-
+    const currentNote = e.target.closest('#title-bar').children[0];
+    if (currentNote.classList.contains('note--active')) this._addNoteHidden();
     this.#notes.forEach((note, i) =>
       String(note.id) === noteTarget ? this.#notes.splice(i, 1) : note
     );
     this._setLocalStorage();
+
     e.target.closest('#title-bar').style.transform = 'translateX(300%)';
     setTimeout(() => {
       e.target.closest('#title-bar').remove();
     }, 300);
-
-    this._addNoteHidden();
   }
   _addNoteHidden() {
     noteHeader.classList.add('note--hidden');
