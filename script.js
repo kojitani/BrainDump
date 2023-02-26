@@ -26,6 +26,9 @@ const sortCreation = document.querySelector('.sort-creation');
 const settingsBox = document.querySelector('.settings-box');
 const settingsOverlay = document.querySelector('.settings-overlay');
 const closeBtn = document.querySelector('.close-btn');
+const importBtn = document.querySelector('.import-btn');
+const exportBtn = document.querySelector('.export-btn');
+const importFile = document.querySelector('.import-file');
 const fontSlider = document.querySelector('.font-slider');
 const noteHeaderFontSize = Number(
   window.getComputedStyle(noteHeader).getPropertyValue('font-size').slice(0, -2)
@@ -70,6 +73,8 @@ class App {
     sortBtn.addEventListener('click', this._showSortOptions);
     settingsBtn.addEventListener('click', this._openSettings);
     closeBtn.addEventListener('click', this._closeSettings);
+    importBtn.addEventListener('click', this._importNotes.bind(this));
+    exportBtn.addEventListener('click', this._exportNotes.bind(this));
     fontSlider.addEventListener('input', this._changeFontSize.bind(this));
   }
 
@@ -128,7 +133,7 @@ class App {
           </div>
           </div>`
       );
-
+      console.log(this.#notes);
       noteHeader.value = note.header;
       noteBody.value = note.body;
       /////////////////////////////////////////////////////////////////////////////
@@ -312,6 +317,31 @@ class App {
       fontSlider.value = result.fontSize;
       this._updateFontSize();
     });
+  }
+  _importNotes() {
+    importFile.click();
+
+    importFile.addEventListener('change', () => {
+      const noteFile = new FileReader();
+      noteFile.readAsText(importFile.files[0]);
+      noteFile.addEventListener('load', () => {
+        const newNotes = JSON.parse(noteFile.result);
+        this.#notes = newNotes;
+        this._setLocalStorage();
+        location.reload();
+      });
+    });
+  }
+  _exportNotes() {
+    const exportNotes = JSON.stringify(this.#notes, null, 4);
+
+    const vLink = document.createElement('a'),
+      vBlob = new Blob([exportNotes], { type: 'octet/stream' }),
+      vName = 'notes-extension-backup.json',
+      vUrl = window.URL.createObjectURL(vBlob);
+    vLink.setAttribute('href', vUrl);
+    vLink.setAttribute('download', vName);
+    vLink.click();
   }
 }
 const app = new App();

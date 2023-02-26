@@ -69,28 +69,29 @@ svg {
   background-color: transparent;
   border-style: none;
   border-radius: 5px;
+  top: 3.8px;
   margin: 0;
   padding: 0.3rem;
   cursor: pointer;
 }
 .new-btn {
-  left: 175px;
+  left: 162px;
 }
 .sort-btn {
-  left: 215px;
+  left: 207px;
 }
 .settings-btn {
-  left: 255px;
+  left: 252px;
 }
 .btn-container:hover {
-  background-color: rgba(171, 152, 184, 0.274);
+  background-color: rgba(86, 83, 88, 0.274);
 }
 .new-description,
 .sort-description,
 .settings-description {
   position: absolute;
   white-space: nowrap;
-  top: 41px;
+  top: 45px;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
   line-height: 26.4px;
@@ -108,7 +109,7 @@ svg {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   visibility: hidden;
-  z-index: 2;
+  z-index: 3;
 }
 .new-description {
   left: -17px;
@@ -317,7 +318,7 @@ svg {
   position: absolute;
   height: 0px;
   width: 0px;
-  top: 15px;
+  top: 12px;
   left: -12.8px;
   border-width: 7px;
   border-color: transparent rgb(63, 61, 63) transparent transparent;
@@ -408,7 +409,7 @@ svg {
   font-size: 22px;
 }
 .font-settings {
-  top: 220px;
+  top: 223px;
   font-size: 22px;
 }
 .import-btn,
@@ -437,16 +438,18 @@ svg {
   left: 40px;
   top: 120px;
   padding: 0.5rem;
+  border: 2px solid rgb(53, 52, 52);
 }
 
 .export-btn {
   width: 80%;
   left: 40px;
-  top: 165px;
+  top: 170px;
   padding: 0.5rem;
+  border: 2px solid rgb(53, 52, 52);
 }
-.import,
-.export {
+.import-file,
+.export-file {
   display: none;
 }
 .footer {
@@ -477,6 +480,10 @@ svg {
   color: white;
   margin-left: -0.5rem;
 }
+.donation-link:hover,
+.suggestion-link:hover {
+  text-decoration: none;
+}
 .donation:hover .coffee-icon {
   scale: 1.2;
   transition: all 0.5s ease;
@@ -496,10 +503,9 @@ svg {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
   position: absolute;
   width: 100%;
-  bottom: 90px;
+  bottom: 95px;
 }
 .font-slider {
   width: 80%;
@@ -507,11 +513,13 @@ svg {
   appearance: none;
   background: transparent;
   cursor: pointer;
+  margin-bottom: 0.5rem;
 }
 .font-slider::-webkit-slider-runnable-track {
   background: rgb(41, 40, 40);
-  height: 1rem;
+  height: calc(1rem + 4px);
   border-radius: 10px;
+  border: 2px solid rgb(53, 52, 52);
 }
 .font-slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
@@ -533,6 +541,7 @@ svg {
 }
 .slider-caption p {
   text-align: center;
+  line-height: 1rem;
 }
 .smaller {
   font-size: 15px;
@@ -542,7 +551,6 @@ svg {
 .normal {
   font-size: 20px;
   margin: 0;
-  /* margin-left: 0.4rem; */
   padding-left: 0.3rem;
 }
 .bigger {
