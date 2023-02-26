@@ -325,7 +325,8 @@ class App {
       noteFile.readAsText(importFile.files[0]);
       noteFile.addEventListener('load', () => {
         const newNotes = JSON.parse(noteFile.result);
-        this.#notes = newNotes;
+        // this.#notes = newNotes;
+        newNotes.forEach(note => this.#notes.push(note));
         this._setLocalStorage();
         location.reload();
       });

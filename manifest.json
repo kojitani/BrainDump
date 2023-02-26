@@ -2,7 +2,7 @@
   "name": "BrainDump",
   "version": "1.0",
   "manifest_version": 3,
-  "description": "Easily dump your ideas while browsing the internet",
+  "description": "Quick and easy way of capturing your ideas into notes directly in your browser",
   "author": "Koji",
   "permissions": ["storage"],
 
