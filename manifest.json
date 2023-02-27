@@ -1,6 +1,6 @@
 {
-  "name": "BrainDump",
-  "version": "1.0",
+  "name": "BrainDump - Notes anywhere",
+  "version": "1.0.2",
   "manifest_version": 3,
   "description": "Quick and easy way of capturing your ideas into notes directly in your browser",
   "author": "Koji",

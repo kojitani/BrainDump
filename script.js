@@ -233,7 +233,6 @@ class App {
     chrome.storage.local.get(['notes']).then(result => {
       if (!result.notes) return;
       const notes = JSON.parse(result.notes);
-      if (!notes) return;
       notes.forEach(note => this.#notes.push(note));
       this._loadNotes();
     });
@@ -248,12 +247,11 @@ class App {
       sortOptions.classList.add('hidden');
       overlay.classList.add('hidden');
     }
-    if (e.target.classList.contains('sort-modified')) {
+    if (e.target.classList.contains('sort-modified'))
       this._sortByLastModified();
-    }
-    if (e.target.classList.contains('sort-creation')) {
+
+    if (e.target.classList.contains('sort-creation'))
       this._sortByCreationDate();
-    }
   }
 
   _setSortingOrder(order) {
@@ -325,8 +323,13 @@ class App {
       noteFile.readAsText(importFile.files[0]);
       noteFile.addEventListener('load', () => {
         const newNotes = JSON.parse(noteFile.result);
-        // this.#notes = newNotes;
-        newNotes.forEach(note => this.#notes.push(note));
+
+        //IMPORT NOTES WITH UNIQUE IDS ONLY
+        const uniqueIDs = [];
+        this.#notes.forEach(note => uniqueIDs.push(note.id));
+        newNotes.forEach(note =>
+          uniqueIDs.includes(note.id) ? note : this.#notes.push(note)
+        );
         this._setLocalStorage();
         location.reload();
       });
@@ -337,7 +340,7 @@ class App {
 
     const vLink = document.createElement('a'),
       vBlob = new Blob([exportNotes], { type: 'octet/stream' }),
-      vName = 'notes-extension-backup.json',
+      vName = 'brain-dump-notes-backup.json',
       vUrl = window.URL.createObjectURL(vBlob);
     vLink.setAttribute('href', vUrl);
     vLink.setAttribute('download', vName);
