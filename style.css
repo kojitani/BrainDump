@@ -5,6 +5,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
+
 *,
 *::before,
 *::after {
@@ -57,13 +60,13 @@ svg {
 }
 .app-icon {
   position: absolute;
-  top: 6.5px;
-  left: 10px;
+  top: 3.5px;
+  left: 5px;
 }
 .app-name {
   position: absolute;
   top: 17px;
-  left: 48px;
+  left: 46px;
   font-size: 18px;
   font-family: 'Special Elite', sans-serif;
   font-weight: 600;
@@ -165,7 +168,7 @@ svg {
   overflow: hidden;
 }
 .note-title {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Tilt Neon', sans-serif;
   font-size: 18px;
   line-height: 1.7rem;
   color: white;
@@ -215,7 +218,7 @@ svg {
 
 .note-header,
 .note-body {
-  font-family: 'Karla', sans-serif;
+  font-family: 'Tilt Neon', sans-serif;
   margin: 0;
   padding: 0;
   outline: none;
@@ -226,6 +229,7 @@ svg {
   display: block;
   color: white;
 }
+
 .note-header {
   font-weight: 600;
   font-size: 33px;
@@ -587,8 +591,7 @@ svg {
   border: 2px solid rgb(53, 52, 52);
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-
-  /* gap: 15px */
+  gap: 0.5rem;
 }
 .search-bar {
   background: transparent;
@@ -597,10 +600,11 @@ svg {
   border-style: none;
   color: white;
   font-size: 17px;
-  font-family: 'Karla', sans-serif;
+  font-family: 'Tilt Neon', sans-serif;
 }
 .cancel-btn {
   cursor: pointer;
+  visibility: hidden;
 }
 @media (min-width: 720px) and (max-width: 799px) {
   html {

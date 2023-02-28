@@ -164,6 +164,7 @@ class App {
     noteBody.value = note.body;
     noteHeader.value = note.header;
     this._noteResize();
+    noteBody.blur();
     noteBody.focus();
   }
   _noteActiveReset() {
@@ -357,6 +358,7 @@ class App {
     const titleContainers = document.querySelectorAll('#title-bar');
     this._noteActiveReset();
     this._addNoteHidden();
+    searchBarCancel.style.visibility = 'visible';
     const newNotes = this.#notes.filter(note => {
       if (
         note.header.toLowerCase().includes(searchKeywords) ||
@@ -374,13 +376,16 @@ class App {
           container.style.display = 'flex';
       })
     );
-    if (searchBar.value === '')
+    if (searchBar.value === '') {
       titleContainers.forEach(container => (container.style.display = 'flex'));
+      searchBarCancel.style.visibility = 'hidden';
+    }
   }
   _cancelSearch() {
     searchBar.value = '';
     const titleContainers = document.querySelectorAll('#title-bar');
     titleContainers.forEach(container => (container.style.display = 'flex'));
+    searchBarCancel.style.visibility = 'hidden';
   }
 }
 const app = new App();
