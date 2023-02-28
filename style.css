@@ -156,7 +156,7 @@ svg {
 }
 
 .notes-list {
-  height: calc(100% - 64px);
+  height: calc(100% - 110px);
   overflow-y: scroll;
 }
 .notes-titles {
@@ -448,13 +448,16 @@ svg {
   padding: 0.5rem;
   border: 2px solid rgb(53, 52, 52);
 }
-
 .export-btn {
   width: 80%;
   left: 40px;
   top: 170px;
   padding: 0.5rem;
   border: 2px solid rgb(53, 52, 52);
+}
+.import-btn:hover,
+.export-btn:hover {
+  background-color: rgb(63, 62, 62);
 }
 .import-file,
 .export-file {
@@ -523,6 +526,7 @@ svg {
   cursor: pointer;
   margin-bottom: 0.5rem;
 }
+
 .font-slider::-webkit-slider-runnable-track {
   background: rgb(41, 40, 40);
   height: calc(1rem + 4px);
@@ -537,6 +541,11 @@ svg {
   border-radius: 50%;
   height: 1rem;
   width: 1rem;
+  transition: all 0.2s ease;
+}
+.font-slider::-webkit-slider-thumb:hover {
+  scale: 1.2;
+  transition: all 0.2s ease;
 }
 .slider-caption {
   display: flex;
@@ -565,7 +574,34 @@ svg {
   margin: 0;
   padding: 0;
 }
-
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-left: 2.5%;
+  margin-bottom: 0;
+  padding: 0;
+  width: 95%;
+  background-color: black;
+  border-radius: 10px;
+  /* gap: 15px */
+}
+.search-bar {
+  background: transparent;
+  padding: 0.5rem;
+  outline-style: none;
+  border-style: none;
+  color: white;
+  font-size: 17px;
+  font-family: 'Karla', sans-serif;
+}
+.search-icon {
+  margin-left: 0.5rem;
+}
+.cancel-btn {
+  cursor: pointer;
+}
 @media (min-width: 720px) and (max-width: 799px) {
   html {
     zoom: 0.9;

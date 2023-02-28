@@ -19,6 +19,9 @@ const overlay = document.querySelector('.overlay');
 const body = document.querySelector('body');
 const html = document.querySelector('html');
 
+const searchBar = document.querySelector('.search-bar');
+const searchBarCancel = document.querySelector('.cancel-btn');
+
 const sortOptions = document.querySelector('.sort-options');
 const sortModified = document.querySelector('.sort-modified');
 const sortCreation = document.querySelector('.sort-creation');
@@ -68,6 +71,8 @@ class App {
     noteBody.addEventListener('input', this._updateNoteData.bind(this));
     notesTitles.addEventListener('click', this._deleteNote.bind(this));
     body.addEventListener('click', this._hideOverlays.bind(this));
+    searchBar.addEventListener('input', this._searchFunction.bind(this));
+    searchBarCancel.addEventListener('click', this._cancelSearch.bind(this));
 
     newBtn.addEventListener('click', this._newNote.bind(this));
     sortBtn.addEventListener('click', this._showSortOptions);
@@ -345,6 +350,37 @@ class App {
     vLink.setAttribute('href', vUrl);
     vLink.setAttribute('download', vName);
     vLink.click();
+  }
+
+  _searchFunction(e) {
+    const searchKeywords = e.target.value.toLowerCase();
+    const titleContainers = document.querySelectorAll('#title-bar');
+    this._noteActiveReset();
+    this._addNoteHidden();
+    const newNotes = this.#notes.filter(note => {
+      if (
+        note.header.toLowerCase().includes(searchKeywords) ||
+        note.body.toLowerCase().includes(searchKeywords)
+      )
+        return note;
+    });
+    this._searchItemDisplay(titleContainers, newNotes);
+  }
+  _searchItemDisplay(titleContainers, newNotes) {
+    titleContainers.forEach(container => (container.style.display = 'none'));
+    newNotes.forEach(note =>
+      titleContainers.forEach(container => {
+        if (note.id === container.children[0].dataset.id)
+          container.style.display = 'flex';
+      })
+    );
+    if (searchBar.value === '')
+      titleContainers.forEach(container => (container.style.display = 'flex'));
+  }
+  _cancelSearch() {
+    searchBar.value = '';
+    const titleContainers = document.querySelectorAll('#title-bar');
+    titleContainers.forEach(container => (container.style.display = 'flex'));
   }
 }
 const app = new App();
