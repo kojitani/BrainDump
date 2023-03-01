@@ -192,7 +192,7 @@ svg {
   text-overflow: ellipsis;
   transform: translateX(10%);
   transition: transform 0.5s ease;
-  background-color: rgb(50, 21, 61);
+  background-color: #332844;
   border: 2px solid rgb(48, 34, 58);
 }
 
@@ -295,7 +295,7 @@ svg {
   border-radius: 5px;
   left: 320px;
   z-index: 11;
-  background-color: rgba(56, 36, 62, 1);
+  background-color: #332844;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   visibility: hidden;
 }
@@ -307,7 +307,7 @@ svg {
   top: 16px;
   left: -12.5px;
   border-width: 7px;
-  border-color: transparent rgba(56, 36, 62, 1) transparent transparent;
+  border-color: transparent #332844 transparent transparent;
   border-style: solid;
   z-index: 5;
 }
@@ -332,7 +332,7 @@ svg {
 .sort-options {
   position: absolute;
   white-space: nowrap;
-  background-color: rgb(32, 25, 32);
+  background-color: #332844;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
   color: white;
@@ -351,7 +351,7 @@ svg {
   top: 12px;
   left: -12.8px;
   border-width: 7px;
-  border-color: transparent rgba(56, 36, 62, 1) transparent transparent;
+  border-color: transparent #332844 transparent transparent;
   border-style: solid;
   z-index: 5;
 }
@@ -366,12 +366,22 @@ svg {
 .sort-modified:hover,
 .sort-creation:hover {
   border-radius: 5px;
-  background-color: rgb(50, 21, 61);
+  background: rgb(110, 61, 125);
+  background: linear-gradient(
+    90deg,
+    rgba(110, 61, 125, 1) 0%,
+    rgba(96, 53, 114, 1) 26%
+  );
   cursor: pointer;
 }
 .sort--active {
   border-radius: 5px;
-  background-color: rgb(50, 21, 61);
+  background: rgb(110, 61, 125);
+  background: linear-gradient(
+    90deg,
+    rgba(110, 61, 125, 1) 0%,
+    rgba(96, 53, 114, 1) 26%
+  );
 }
 .overlay {
   position: absolute;
@@ -547,7 +557,7 @@ svg {
   background-color: #9146ff;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   border-radius: 50%;
-  border: 1px solid #4a2470;
+  border: 1px solid #7337cc;
   height: 1rem;
   width: 1rem;
   transition: all 0.2s ease;
@@ -559,7 +569,7 @@ svg {
 }
 .slider-caption {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 80%;
   color: white;
@@ -572,13 +582,13 @@ svg {
 .smaller {
   font-size: 15px;
   margin: 0;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
 }
-.normal {
+/* .normal {
   font-size: 20px;
   margin: 0;
   padding-left: 0.3rem;
-}
+} */
 .bigger {
   font-size: 25px;
   margin: 0;
