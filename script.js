@@ -359,30 +359,30 @@ class App {
     this._noteActiveReset();
     this._addNoteHidden();
     searchBarCancel.style.visibility = 'visible';
-    const newNotes = this.#notes.filter(note => {
+    const filteredNotes = this.#notes.filter(note => {
       if (
         note.header.toLowerCase().includes(searchKeywords) ||
         note.body.toLowerCase().includes(searchKeywords)
       )
         return note;
     });
-    this._searchItemDisplay(titleContainers, newNotes);
+    this._searchItemDisplay(titleContainers, filteredNotes);
   }
-  _searchItemDisplay(titleContainers, newNotes) {
+  _searchItemDisplay(titleContainers, filteredNotes) {
     titleContainers.forEach(container => (container.style.display = 'none'));
-    newNotes.forEach(note =>
+    filteredNotes.forEach(note =>
       titleContainers.forEach(container => {
         if (note.id === container.children[0].dataset.id)
           container.style.display = 'flex';
       })
     );
-    if (searchBar.value === '') {
-      titleContainers.forEach(container => (container.style.display = 'flex'));
-      searchBarCancel.style.visibility = 'hidden';
-    }
+    if (searchBar.value === '') this._searchBarDefault();
   }
   _cancelSearch() {
     searchBar.value = '';
+    this._searchBarDefault();
+  }
+  _searchBarDefault() {
     const titleContainers = document.querySelectorAll('#title-bar');
     titleContainers.forEach(container => (container.style.display = 'flex'));
     searchBarCancel.style.visibility = 'hidden';
