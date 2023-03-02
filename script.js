@@ -39,6 +39,7 @@ const noteHeaderFontSize = Number(
 const noteBodyFontSize = Number(
   window.getComputedStyle(noteBody).getPropertyValue('font-size').slice(0, -2)
 );
+noteBody.style.tabSize = '4';
 
 class Notes {
   date = String(new Date()).slice(0, 24);
@@ -65,6 +66,7 @@ class App {
     this._getLocalStorage();
     noteContainer.addEventListener('input', this._noteResize);
     noteContainer.addEventListener('keypress', this._headerEnterKey);
+    noteBody.addEventListener('keydown', this._altIndentation);
     noteHeader.addEventListener('input', this._noteUpdateTitle);
     notesTitles.addEventListener('click', this._clickNote.bind(this));
     noteHeader.addEventListener('input', this._updateNoteData.bind(this));
@@ -125,7 +127,8 @@ class App {
         'afterbegin',
         `<div class='title-bar' id='title-bar'>
           
-            <li class="note-title ${
+            <li class="note-title 
+            ${
               i === this.#notes.length - 1 ? 'note--active' : ''
             }" id="note-title" 
             data-id="${note.id}">${note.title}</li>
@@ -190,7 +193,9 @@ class App {
       String(note.id) === noteTarget ? this.#notes.splice(i, 1) : note
     );
     this._setLocalStorage();
-
+    this._deleteNoteAnimation(e);
+  }
+  _deleteNoteAnimation(e) {
     e.target.closest('#title-bar').style.transform = 'translateX(300%)';
     setTimeout(() => {
       e.target.closest('#title-bar').remove();
@@ -209,6 +214,38 @@ class App {
     if (e.key === 'Enter') {
       e.preventDefault();
       noteBody.focus();
+    }
+  }
+  _altIndentation(e) {
+    if (e.keyCode === 9) {
+      e.preventDefault();
+      const s = this.selectionStart;
+      this.value =
+        this.value.substring(0, this.selectionStart) +
+        '\t' +
+        this.value.substring(this.selectionEnd);
+      this.selectionEnd = s + 1;
+    }
+    if (e.key === 'Enter') {
+      const currentLine = this.value
+        .substring(0, this.selectionStart)
+        .lastIndexOf('\n');
+      const indented = this.value
+        .substring(currentLine, currentLine + 2)
+        .includes('\t');
+      if (indented) {
+        e.preventDefault();
+        console.log(this.value.substring(this.selectionEnd));
+        const s = this.selectionStart;
+        this.value =
+          this.value.substring(0, this.selectionStart) +
+          '\n' +
+          '\t' +
+          this.value.substring(this.selectionEnd);
+        noteBody.blur();
+        noteBody.focus();
+        this.selectionEnd = s + 2;
+      }
     }
   }
   _updateNoteData() {
