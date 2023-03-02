@@ -55,6 +55,7 @@ class App {
   #notes = [];
   #order;
   #fontSize;
+  #noteInnerHTML;
   #sortLastModifiedDate = () =>
     this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   #sortCreationDate = () =>
@@ -104,48 +105,38 @@ class App {
     this.#notes.push(note);
     this._setLocalStorage();
   }
-  _addNote(note) {
-    notesTitles.insertAdjacentHTML(
-      'afterbegin',
-      `<div class='title-bar' id='title-bar'>
+  _noteInsertHTML(note, i = undefined) {
+    this.#noteInnerHTML = `<div class='title-bar' id='title-bar'>
       
-      <li class="note-title note--active" id="note-title" 
-      data-id="${note.id}">${note.title}</li> 
-      <div class='del-btn-container' title='Delete this note'>
-      <img class="del-btn"  src="images/trash.svg"/>
-      </div>
-      <div class="date-container">
-          Last modified at ${note.date}
-      <br/>Created at ${note.date}
-      </div>
-      </div>`
-    );
+    <li class="note-title ${
+      i === this.#notes.length - 1 || i === undefined ? 'note--active' : ''
+    }" id="note-title" 
+    data-id="${note.id}">${note.title}</li> 
+    <div class='del-btn-container' title='Delete this note'>
+    <img class="del-btn"  src="images/trash.svg"/>
+    </div>
+    <div class="date-container">
+        Last modified at ${note.date}
+    <br/>Created at ${
+      i === undefined
+        ? note.date
+        : String(new Date(Number(note.id))).slice(0, 24)
+    }
+    </div>
+    </div>`;
+  }
+  _addNote(note) {
+    this._noteInsertHTML(note);
+    notesTitles.insertAdjacentHTML('afterbegin', this.#noteInnerHTML);
   }
   _loadNotes() {
     this.#notes.forEach((note, i) => {
-      notesTitles.insertAdjacentHTML(
-        'afterbegin',
-        `<div class='title-bar' id='title-bar'>
-          
-            <li class="note-title 
-            ${
-              i === this.#notes.length - 1 ? 'note--active' : ''
-            }" id="note-title" 
-            data-id="${note.id}">${note.title}</li>
-            <div class='del-btn-container'  title='Delete this note'>
-            <img class="del-btn" src="images/trash.svg"/>
-            </div>
-            <div class="date-container">
-              Last modified at ${note.date}
-         <br/>Created at ${String(new Date(Number(note.id))).slice(0, 24)}
-          </div>
-          </div>`
-      );
+      this._noteInsertHTML(note, i);
+      notesTitles.insertAdjacentHTML('afterbegin', this.#noteInnerHTML);
       noteHeader.value = note.header;
       noteBody.value = note.body;
-      /////////////////////////////////////////////////////////////////////////////
-      ////////////// FIX THIS AFTER LEARNING ABOUT ASYNC FUNCTIONS/////////////////
-      /////////////////////////////////////////////////////////////////////////////
+
+      /// FIX THIS AFTER LEARNING ABOUT ASYNC FUNCTIONS///
       setTimeout(() => {
         this._removeNoteHidden();
         this._noteResize();
@@ -217,7 +208,6 @@ class App {
     }
   }
   _altIndentation(e) {
-    let indentOnly;
     if (e.keyCode === 9) {
       e.preventDefault();
       const selectionStart = this.selectionStart;
@@ -228,10 +218,10 @@ class App {
       this.selectionEnd = selectionStart + 1;
     }
     if (e.key === 'Enter') {
-      const currentLine = e.target.value
-        .substring(0, e.target.selectionStart)
+      const currentLine = this.value
+        .substring(0, this.selectionStart)
         .lastIndexOf('\n');
-      const indented = e.target.value
+      const indented = this.value
         .substring(currentLine, currentLine + 2)
         .includes('\t');
       if (indented) {
