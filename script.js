@@ -136,7 +136,6 @@ class App {
       noteHeader.value = note.header;
       noteBody.value = note.body;
 
-      /// FIX THIS AFTER LEARNING ABOUT ASYNC FUNCTIONS///
       setTimeout(() => {
         this._removeNoteHidden();
         this._noteResize();
@@ -151,7 +150,7 @@ class App {
     this._noteActiveReset();
     this._removeNoteHidden();
     noteTarget.classList.add('note--active');
-    // FIND THE ACTIVE NOTE AND UPDATE VALUES
+
     const note = this.#notes.find(
       note => String(note.id) === noteTarget.dataset.id
     );
@@ -357,7 +356,6 @@ class App {
       noteFile.addEventListener('load', () => {
         const newNotes = JSON.parse(noteFile.result);
 
-        //IMPORT NOTES WITH UNIQUE IDS ONLY
         const uniqueIDs = [];
         this.#notes.forEach(note => uniqueIDs.push(note.id));
         newNotes.forEach(note =>
