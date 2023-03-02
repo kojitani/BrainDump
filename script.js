@@ -217,26 +217,26 @@ class App {
     }
   }
   _altIndentation(e) {
+    let indentOnly;
     if (e.keyCode === 9) {
       e.preventDefault();
-      const s = this.selectionStart;
+      const selectionStart = this.selectionStart;
       this.value =
         this.value.substring(0, this.selectionStart) +
         '\t' +
         this.value.substring(this.selectionEnd);
-      this.selectionEnd = s + 1;
+      this.selectionEnd = selectionStart + 1;
     }
     if (e.key === 'Enter') {
-      const currentLine = this.value
-        .substring(0, this.selectionStart)
+      const currentLine = e.target.value
+        .substring(0, e.target.selectionStart)
         .lastIndexOf('\n');
-      const indented = this.value
+      const indented = e.target.value
         .substring(currentLine, currentLine + 2)
         .includes('\t');
       if (indented) {
         e.preventDefault();
-        console.log(this.value.substring(this.selectionEnd));
-        const s = this.selectionStart;
+        const selectionStart = this.selectionStart;
         this.value =
           this.value.substring(0, this.selectionStart) +
           '\n' +
@@ -244,7 +244,7 @@ class App {
           this.value.substring(this.selectionEnd);
         noteBody.blur();
         noteBody.focus();
-        this.selectionEnd = s + 2;
+        this.selectionEnd = selectionStart + 2;
       }
     }
   }
