@@ -216,7 +216,7 @@ svg {
   left: 300px;
   padding: 3rem;
   overflow-x: hidden;
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
 }
 
 .note-header,

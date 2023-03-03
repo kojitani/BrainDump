@@ -56,6 +56,7 @@ class App {
   #order;
   #fontSize;
   #noteInnerHTML;
+  #indentType;
   #sortLastModifiedDate = () =>
     this.#notes.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   #sortCreationDate = () =>
@@ -67,7 +68,7 @@ class App {
     this._getLocalStorage();
     noteContainer.addEventListener('input', this._noteResize);
     noteContainer.addEventListener('keypress', this._headerEnterKey);
-    noteBody.addEventListener('keydown', this._altIndentation);
+    noteBody.addEventListener('keydown', this._indentationEvent.bind(this));
     noteHeader.addEventListener('input', this._noteUpdateTitle);
     notesTitles.addEventListener('click', this._clickNote.bind(this));
     noteHeader.addEventListener('input', this._updateNoteData.bind(this));
@@ -206,34 +207,35 @@ class App {
       noteBody.focus();
     }
   }
-  _altIndentation(e) {
+  _indent(type) {
+    const selectionStart = noteBody.selectionStart;
+    noteBody.value =
+      noteBody.value.substring(0, noteBody.selectionStart) +
+      `${type === 'tab' ? '\t' : '\n' + '\t'}` +
+      noteBody.value.substring(noteBody.selectionEnd);
+    noteBody.blur();
+    noteBody.focus();
+    noteBody.selectionEnd = selectionStart + (type === 'enter' ? 2 : 1);
+  }
+  _indentationEvent(e) {
     if (e.keyCode === 9) {
       e.preventDefault();
-      const selectionStart = this.selectionStart;
-      this.value =
-        this.value.substring(0, this.selectionStart) +
-        '\t' +
-        this.value.substring(this.selectionEnd);
-      this.selectionEnd = selectionStart + 1;
+      this.#indentType = 'tab';
+      this._indent(this.#indentType);
+      this._noteResize();
     }
     if (e.key === 'Enter') {
-      const currentLine = this.value
-        .substring(0, this.selectionStart)
+      const currentLine = noteBody.value
+        .substring(0, noteBody.selectionStart)
         .lastIndexOf('\n');
-      const indented = this.value
+      const indented = noteBody.value
         .substring(currentLine, currentLine + 2)
         .includes('\t');
       if (indented) {
         e.preventDefault();
-        const selectionStart = this.selectionStart;
-        this.value =
-          this.value.substring(0, this.selectionStart) +
-          '\n' +
-          '\t' +
-          this.value.substring(this.selectionEnd);
-        noteBody.blur();
-        noteBody.focus();
-        this.selectionEnd = selectionStart + 2;
+        this.#indentType = 'enter';
+        this._indent(this.#indentType);
+        this._noteResize();
       }
     }
   }
